@@ -54,10 +54,10 @@ namespace ATMApplication
                         Console.WriteLine(account.GetBankStatement());
                         break;
                     case 2:
-                        PerformDeposit(account);
+                        Depositfunds(account);
                         break;
                     case 3:
-                        PerformWithdrawal(account);
+                        Withdrawalfunds(account);
                         break;
                     case 4:
                         account.DisplayTransactions();
@@ -73,14 +73,14 @@ namespace ATMApplication
             }
         }
 
-        static void PerformDeposit(BankAccount account)
+        static void Depositfunds(BankAccount account)
         {
             Console.Write("\nEnter deposit amount: $");
             double amount = double.Parse(Console.ReadLine());
             account.Deposit(amount);
         }
 
-        static void PerformWithdrawal(BankAccount account)
+        static void Withdrawalfunds(BankAccount account)
         {
             Console.Write("\nEnter withdrawal amount: $");
             double amount = double.Parse(Console.ReadLine());
