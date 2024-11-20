@@ -9,7 +9,7 @@
         while (!exitMain)
         {
             Console.WriteLine("Welcome to Virtual Pet Simulator");
-            Console.WriteLine("Please choose a type of pet (Name or Number): ");
+            Console.WriteLine("Please choose a type of pet : ");
             Console.WriteLine("1. Cat:");
             Console.WriteLine("2. Dog:");
             Console.WriteLine("3. Rabbit:");
@@ -86,7 +86,7 @@
                     continue; // Exit the loop
                 default:
                     Console.WriteLine("Invalid Choice Try Again");
-                    Console.Clear();
+                    Console.WriteLine();
                     continue; 
             }
 

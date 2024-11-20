@@ -1,7 +1,7 @@
 ﻿
 namespace ArrayInitializationExample
 {
-    class Program
+    class Arrayprogram
     {
         static void Main(string[] args)
         {
@@ -16,5 +16,4 @@ namespace ArrayInitializationExample
         }
     }
 }
-
     
