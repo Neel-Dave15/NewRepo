@@ -1,8 +1,74 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace ATMApplication
 {
+    public partial class MainWindow : Window
+    {
+        private BankAccount _account;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        // Login Button Clicked
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            int accountNumber = int.Parse(AccountNumberTextBox.Text);
+            string password = PasswordBox.Password;
+
+            _account = new BankAccount(123456, "Curly Smith", 1000.00, "password1503"); 
+
+            if (_account.VerifyCredentials(accountNumber, password))
+            {
+                StatusTextBlock.Text = "Login successful!";
+                MainMenuPanel.Visibility = Visibility.Visible;
+                LoginButton.IsEnabled = false;
+                AccountNumberTextBox.IsEnabled = false;
+                PasswordBox.IsEnabled = false;
+            }
+            else
+            {
+                StatusTextBlock.Text = "Invalid account number or password.";
+            }
+        }
+
+        // View Bank Statement Button Clicked
+        private void ViewStatementButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(_account.GetBankStatement());
+        }
+
+        // Deposit Button Clicked
+        private void DepositButton_Click(object sender, RoutedEventArgs e)
+        {
+            double amount = double.Parse(DepositAmountTextBox.Text);
+            _account.Deposit(amount);
+        }
+
+        // Withdraw Button Clicked
+        private void WithdrawButton_Click(object sender, RoutedEventArgs e)
+        {
+            double amount = double.Parse(WithdrawAmountTextBox.Text);
+            _account.Withdraw(amount);
+        }
+
+        // View Transaction History Button Clicked
+        private void TransactionHistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            _account.DisplayTransactions();
+        }
+
+        // Exit Button Clicked
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Thank you for using the ATM!");
+            Close();
+        }
+    }
+
     public class BankAccount
     {
         public int AccountNumber { get; private set; }
@@ -43,11 +109,11 @@ namespace ATMApplication
             {
                 Balance += amount;
                 Transactions.Add($"Deposited: ${amount:F2}");
-                Console.WriteLine($"Deposit successful. Current Balance: ${Balance:F2}");
+                MessageBox.Show($"Deposit successful. Current Balance: ${Balance:F2}");
             }
             else
             {
-                Console.WriteLine("Invalid deposit amount.");
+                MessageBox.Show("Invalid deposit amount.");
             }
         }
 
@@ -58,107 +124,23 @@ namespace ATMApplication
             {
                 Balance -= amount;
                 Transactions.Add($"Withdrew: ${amount:F2}");
-                Console.WriteLine($"Withdrawal successful. Current Balance: ${Balance:F2}");
+                MessageBox.Show($"Withdrawal successful. Current Balance: ${Balance:F2}");
             }
             else
             {
-                Console.WriteLine("Invalid withdrawal amount or insufficient funds.");
+                MessageBox.Show("Invalid withdrawal amount or insufficient funds.");
             }
         }
 
         // Display transaction history
         public void DisplayTransactions()
         {
-            Console.WriteLine("\nTransaction History:");
+            string transactionHistory = "\nTransaction History:\n";
             foreach (var transaction in Transactions)
             {
-                Console.WriteLine(transaction);
+                transactionHistory += transaction + "\n";
             }
-        }
-    }
-
-    public class ATMApplication
-    {
-        public static void Start()
-        {
-            // Create account
-            var account = new BankAccount(123456, "Curly Smith", 1000.00, "password1503");
-
-            Console.WriteLine("Welcome to the ATM Application!");
-            Console.WriteLine("--------------------------------");
-
-            // User login
-            Console.Write("Enter Account Number: ");
-            int accountNumber = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter Password: ");
-            string password = Console.ReadLine();
-
-            if (account.VerifyCredentials(accountNumber, password))
-            {
-                Console.WriteLine("\nLogin successful!");
-                ShowMenu(account);
-            }
-            else
-            {
-                Console.WriteLine("Invalid account number or password.");
-            }
-        }
-
-        static void ShowMenu(BankAccount account)
-        {
-            bool running = true;
-
-            while (running)
-            {
-                Console.WriteLine("\nOptions:");
-                Console.WriteLine("1. View Bank Statement");
-                Console.WriteLine("2. Deposit Funds");
-                Console.WriteLine("3. Withdraw Funds");
-                Console.WriteLine("4. View Transaction History");
-                Console.WriteLine("5. Exit");
-                Console.Write("Choose an option: ");
-
-                int choice = int.Parse(Console.ReadLine());
-
-                switch (choice)
-                {
-                    case 1:
-                        Console.WriteLine("\nBank Statement:");
-                        Console.WriteLine(account.GetBankStatement());
-                        break;
-                    case 2:
-                        DepositFunds(account);
-                        break;
-                    case 3:
-                        WithdrawalFunds(account);
-                        break;
-                    case 4:
-                        account.DisplayTransactions();
-                        break;
-                    case 5:
-                        Console.WriteLine("\nThank you for using the ATM. Goodbye!");
-                        running = false;
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice. Please try again.");
-                        break;
-                }
-            }
-        }
-
-        static void DepositFunds(BankAccount account)
-        {
-            Console.Write("\nEnter deposit amount: $");
-            double amount = double.Parse(Console.ReadLine());
-            account.Deposit(amount);
-        }
-
-        static void WithdrawalFunds(BankAccount account)
-        {
-            Console.Write("\nEnter withdrawal amount: $");
-            double amount = double.Parse(Console.ReadLine());
-            account.Withdraw(amount);
+            MessageBox.Show(transactionHistory);
         }
     }
 }

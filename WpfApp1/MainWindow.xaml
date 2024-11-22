@@ -1,12 +1,46 @@
-﻿<Window x:Class="WpfApp1.MainWindow"
+﻿<Window x:Class="ATMApplication.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="ATM Application" Height="400" Width="400">
     <Grid>
+        <StackPanel>
 
+            <!-- Title Section -->
+            <TextBlock Text="Welcome to the ATM Application" FontSize="25" Margin="10" HorizontalAlignment="Center"/>
+
+            <!-- Login Section -->
+            <TextBlock Text="Enter Your Account Number:" Margin="10 5"/>
+            <TextBox Name="AccountNumberTextBox" Margin="10 5" Text="123456"/>
+
+            <TextBlock Text="Enter Your Password:" Margin="10 5"/>
+            <PasswordBox Name="PasswordBox" Margin="10 5" Password="password1503"/>
+
+            <Button Content="Login" Name="LoginButton" Click="LoginButton_Click" Margin="10" Background="BlueViolet"/>
+
+            <TextBlock Name="StatusTextBlock" Text="" Margin="10"/>
+
+            <!-- Main Menu Panel -->
+            <StackPanel Name="MainMenuPanel" Visibility="Collapsed">
+                <Button Content="View Bank Statement" Click="ViewStatementButton_Click" Margin="10"/>
+                <Button Content="Deposit Funds" Click="DepositButton_Click" Margin="10"/>
+                <Button Content="Withdraw Funds" Click="WithdrawButton_Click" Margin="10"/>
+                <Button Content="View Transaction History" Click="TransactionHistoryButton_Click" Margin="10"/>
+                <Button Content="Exit" Click="ExitButton_Click" Margin="10"/>
+            </StackPanel>
+
+            <!-- Deposit Section -->
+            <StackPanel Name="DepositPanel" Visibility="Collapsed">
+                <TextBlock Text="Enter Deposit Amount:" Margin="10"/>
+                <TextBox Name="DepositAmountTextBox" Margin="10"/>
+                <Button Content="Deposit" Click="DepositButton_Click" Margin="10"/>
+            </StackPanel>
+
+            <!-- Withdraw Section -->
+            <StackPanel Name="WithdrawPanel" Visibility="Collapsed">
+                <TextBlock Text="Enter Withdrawal Amount:" Margin="10"/>
+                <TextBox Name="WithdrawAmountTextBox" Margin="10"/>
+                <Button Content="Withdraw" Click="WithdrawButton_Click" Margin="10"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
